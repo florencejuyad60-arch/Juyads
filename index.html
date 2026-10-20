@@ -1,83 +1,456 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>This is for you</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 5th Monthsary 💗</title>
 
-  <link rel="stylesheet" href="style.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Georgia, 'Times New Roman', serif;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+    background:
+        radial-gradient(ellipse at top, #48205f 0%, transparent 55%),
+        linear-gradient(160deg, #100d2b, #32113e, #100d2b);
+}
+
+/* SHOOTING STAR BACKGROUND */
+#stars {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    top: -20px;
+    left: var(--left);
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 2px #ffc8f5;
+    animation: twinkle var(--duration) infinite;
+    animation-delay: var(--delay);
+}
+
+.shooting-star {
+    position: absolute;
+    top: var(--top);
+    left: -150px;
+    width: 130px;
+    height: 2px;
+    background: linear-gradient(
+        90deg, transparent, #fff, #ffc5f7
+    );
+    box-shadow: 0 0 12px #ffb6ef;
+    transform: rotate(-25deg);
+    animation: shoot var(--speed) linear infinite;
+    animation-delay: var(--delay);
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: .2; transform: scale(.7); }
+    50% { opacity: 1; transform: scale(1.8); }
+}
+
+@keyframes shoot {
+    0% { transform: translate(0, 0) rotate(-25deg); opacity: 0; }
+    5% { opacity: 1; }
+    35% { opacity: 1; }
+    50%, 100% {
+        transform: translate(120vw, 55vh) rotate(-25deg);
+        opacity: 0;
+    }
+}
+
+main {
+    position: relative;
+    z-index: 1;
+    padding: 45px 15px 55px;
+}
+
+h1 {
+    color: #ffd5f5;
+    font-size: clamp(30px, 7vw, 49px);
+    text-shadow: 0 0 18px #ff72d2;
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff72d2; }
+    to { text-shadow: 0 0 28px #ffb5ef, 0 0 45px #a75aff; }
+}
+
+.subtitle {
+    margin: 17px auto 10px;
+    color: #f5dff7;
+    font-size: 17px;
+    line-height: 1.8;
+    max-width: 550px;
+}
+
+.small-heart {
+    color: #ff9bde;
+    font-size: 25px;
+    margin: 16px 0;
+    animation: heartbeat 1.4s infinite;
+}
+
+@keyframes heartbeat {
+    50% { transform: scale(1.25); }
+}
+
+.friends {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 65px 35px;
+    margin: 75px auto 35px;
+    max-width: 1100px;
+}
+
+.friend {
+    width: min(290px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.friend h2 {
+    color: #ffe0fa;
+    font-size: 26px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 12px #f86bd1;
+}
+
+.friend .caption {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #d8c4f4;
+    margin-bottom: 26px;
+}
+
+/* ENVELOPE */
+.envelope {
+    position: relative;
+    width: 260px;
+    height: 175px;
+    margin: 15px auto 28px;
+    perspective: 900px;
+    filter: drop-shadow(0 8px 18px #09051e);
+}
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, #ffafd9, #d95cb5);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.letter {
+    position: absolute;
+    left: 8%;
+    bottom: 8px;
+    width: 84%;
+    height: 150px;
+    padding: 18px 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    overflow-y: auto;
+    background: linear-gradient(160deg, #fff8ff, #ffe2f2);
+    color: #74305f;
+    border: 1px solid #ffaddd;
+    border-radius: 5px;
+    box-shadow: 0 0 15px #ffb7eb;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(35px);
+    transition: transform 1s ease, opacity .5s ease;
+}
+
+.letter h3 {
+    font-size: 18px;
+    color: #d34491;
+}
+
+.letter p {
+    font-size: 14px;
+    line-height: 1.65;
+    font-style: italic;
+}
+
+.envelope-front {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, #f77cc0, #b743a1);
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+    z-index: 4;
+    border-radius: 4px;
+}
+
+.flap {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, #ffcaeb, #f78aca);
+    clip-path: polygon(0 0, 100% 0, 50% 62%);
+    transform-origin: top center;
+    transform: rotateX(0deg);
+    transition: transform .8s ease;
+    z-index: 5;
+}
+
+.seal {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 31px;
+    z-index: 6;
+    transition: opacity .3s;
+    filter: drop-shadow(0 0 7px #ff4bb9);
+}
+
+/* OPEN ENVELOPE */
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope.open .letter {
+    opacity: 1;
+    transform: translateY(-100px);
+    transition-delay: .35s;
+    z-index: 3;
+}
+
+.envelope.open .seal {
+    opacity: 0;
+}
+
+button {
+    border: 1px solid #ffd5f5;
+    border-radius: 50px;
+    padding: 13px 35px;
+    background: linear-gradient(100deg, #ff76c8, #a96bff);
+    color: white;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 0 17px #e866d8;
+    transition: transform .3s, box-shadow .3s;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 27px #ff91e5;
+}
+
+button:active {
+    transform: scale(.96);
+}
+
+.hint {
+    margin-top: 13px;
+    color: #d8c4f4;
+    font-size: 13px;
+}
+
+.footer {
+    margin-top: 65px;
+    color: #f5c9ed;
+    line-height: 2;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    main { padding-top: 35px; }
+    .friends { gap: 75px; }
+    .envelope { width: 250px; }
+    .subtitle { font-size: 15px; }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div id="stars"></div>
 
-    <h1>💌 this is for you 🫶</h1>
+<main>
+    <div class="small-heart">♡ ✨ ♡</div>
 
-    <div class="envelope" id="envelope">
+    <h1>Happy 5th Monthsary!</h1>
 
-      <!-- Back of envelope -->
-      <div class="back"></div>
+    <p class="subtitle">
+        Five months of beautiful memories, endless laughter,
+        and a friendship I will always treasure. 💗
+        <br>
+        Three special souls, three little envelopes,
+        and three messages straight from my heart.
+    </p>
 
-      <!-- Letter -->
-      <div class="letter">
+    <div class="small-heart">💌</div>
 
-        <h2>Thank you for coming into my Life ❤️</h2>
+    <section class="friends">
 
-        <p>
-          Dear Jeselle,<br><br>
+        <!-- JESSELLE -->
+        <div class="friend">
+            <h2>For Jeselle 💗</h2>
+            <p class="caption">MY BEAUTIFUL FRIEND</p>
 
-          I just want to take a moment to say thank you for coming into my life.
-          Meeting you is something I truly appreciate because you became someone
-          who brought meaningful moments, happiness, and memories that I will
-          always treasure.
+            <div class="envelope" id="env-jeselle">
+                <div class="envelope-back"></div>
 
-          Thank you for every conversation, every laugh, every little moment,
-          and even the simple times when we were just there for each other.
+                <div class="letter">
+                    <h3>Dear Jeselle ♡</h3>
+                    <p>
+                        No matter how much life changes or how far
+                        our paths may lead us, a part of my heart
+                        will always be grateful that God made our
+                        friendship part of my story.
+                    </p>
+                    <span>With love, your best friend 💗</span>
+                </div>
 
-          You may not realize how much your presence means to me, but I’m
-          genuinely grateful that our paths crossed.
+                <div class="envelope-front"></div>
+                <div class="flap"></div>
+                <div class="seal">💗</div>
+            </div>
 
-          I also want you to know that I will always be there for you.
-          Whenever you need someone to listen, someone to talk to, or simply
-          someone who will support you, I’ll do my best to be there.
+            <button onclick="toggleEnvelope('jeselle', this)">
+                Jeselle 💌
+            </button>
+            <p class="hint">Tap your name to open your letter ✨</p>
+        </div>
 
-          You don’t have to face everything alone, because I’ll always be
-          willing to stand by your side just tell me.
+        <!-- RAIGN -->
+        <div class="friend">
+            <h2>For Raign 🌷</h2>
+            <p class="caption">MY PRECIOUS FRIEND</p>
 
-          Whatever happens in the future, I hope you always remember that
-          there is someone who is thankful that you became part of his story.
+            <div class="envelope" id="env-raign">
+                <div class="envelope-back"></div>
 
-          I’m grateful for every memory we’ve made, and I hope we can continue
-          making more memories together.
+                <div class="letter">
+                    <h3>Dear Raign ♡</h3>
+                    <p>
+                        You are one of those rare blessings who
+                        make ordinary days unforgettable, and
+                        wherever life takes us, I hope you always
+                        remember how deeply your presence is valued.
+                    </p>
+                    <span>Forever grateful for you 🌷</span>
+                </div>
 
-          Thank you, Jeselle, for being you. Thank you for the smiles, the
-          memories, and for simply coming into my life.
+                <div class="envelope-front"></div>
+                <div class="flap"></div>
+                <div class="seal">💗</div>
+            </div>
 
-          I’m truly grateful for you, and I’ll always be here for you. 💖
-        </p>
+            <button onclick="toggleEnvelope('raign', this)">
+                Raign 💌
+            </button>
+            <p class="hint">Tap your name to open your letter ✨</p>
+        </div>
 
-      </div>
+        <!-- SWEETY -->
+        <div class="friend">
+            <h2>For Sweety 🦋</h2>
+            <p class="caption">MY SWEET FRIEND</p>
 
-      <!-- Envelope front -->
-      <div class="front"></div>
+            <div class="envelope" id="env-sweety">
+                <div class="envelope-back"></div>
 
-      <!-- Top flap -->
-      <div class="top-flap"></div>
+                <div class="letter">
+                    <h3>Dear Sweety ♡</h3>
+                    <p>
+                        If I could give you one thing to keep
+                        forever, it would be the ability to see
+                        yourself through my eyes, so you would
+                        understand how much happiness your
+                        friendship brings into my life.
+                    </p>
+                    <span>You will always be appreciated 🦋</span>
+                </div>
 
-      <!-- Bottom fold -->
-      <div class="bottom-fold"></div>
+                <div class="envelope-front"></div>
+                <div class="flap"></div>
+                <div class="seal">💗</div>
+            </div>
 
+            <button onclick="toggleEnvelope('sweety', this)">
+                Sweety 💌
+            </button>
+            <p class="hint">Tap your name to open your letter ✨</p>
+        </div>
+
+    </section>
+
+    <div class="footer">
+        <p>Made with love, just for you three. 💕</p>
+        <p>Three names, countless memories, one precious friendship.</p>
+        <p>May God continue to guide our friendship. ✨</p>
     </div>
+</main>
 
-    <div class="buttons">
-      <button onclick="openLetter()">OPEN</button>
-      <button onclick="closeLetter()">CLOSE</button>
-    </div>
+<script>
+// CREATE THE STARS
+const stars = document.getElementById("stars");
 
-  </div>
+for (let i = 0; i < 110; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.setProperty("--left", Math.random() * 100 + "%");
+    star.style.setProperty("--duration", (2 + Math.random() * 4) + "s");
+    star.style.setProperty("--delay", (Math.random() * 5) + "s");
+    star.style.top = Math.random() * 100 + "%";
+    stars.appendChild(star);
+}
 
-  <script src="script.js"></script>
+// CREATE SHOOTING STARS
+for (let i = 0; i < 5; i++) {
+    const shootingStar = document.createElement("div");
+    shootingStar.className = "shooting-star";
+    shootingStar.style.setProperty("--top", (Math.random() * 65) + "%");
+    shootingStar.style.setProperty("--speed", (4 + Math.random() * 5) + "s");
+    shootingStar.style.setProperty("--delay", (i * 2.2) + "s");
+    stars.appendChild(shootingStar);
+}
+
+// OPEN AND CLOSE EACH FRIEND'S ENVELOPE
+function toggleEnvelope(name, button) {
+    const envelope = document.getElementById("env-" + name);
+    const isOpen = envelope.classList.contains("open");
+
+    envelope.classList.toggle("open");
+
+    if (isOpen) {
+        button.innerHTML =
+            name.charAt(0).toUpperCase() + name.slice(1) + " 💌";
+    } else {
+        button.innerHTML = "Close letter 💗";
+    }
+}
+</script>
 
 </body>
 </html>
